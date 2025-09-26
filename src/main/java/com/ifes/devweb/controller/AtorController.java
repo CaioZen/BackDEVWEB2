@@ -17,27 +17,27 @@ public class AtorController{
         this.atorService = atorService;
     }
 
-    @PostMapping
+    @PostMapping("/inserir")
     public ResponseEntity<Ator> inserirAtor(@RequestBody Ator ator){
         return ResponseEntity.ok(atorService.salvarAtor(ator));
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<Ator>> listarAtores(){
         return ResponseEntity.ok(atorService.listarAtores());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<Ator> buscarAtorPorId(@RequestParam("id") String id){
         return ResponseEntity.ok(atorService.buscarAtorPorId(UUID.fromString(id)));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<Ator> atualizarAtor(@PathVariable String id, @RequestBody Ator atorAtualizado){
         return ResponseEntity.ok(atorService.atualizarAtor(UUID.fromString(id), atorAtualizado));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarAtor(@PathVariable String id) {
         atorService.deletarAtor(UUID.fromString(id));
         return ResponseEntity.noContent().build();
