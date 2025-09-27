@@ -28,7 +28,7 @@ public class AtorController{
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Ator> buscarAtorPorId(@RequestParam("id") String id){
+    public ResponseEntity<Ator> buscarAtorPorId(@PathVariable String id){
         return ResponseEntity.ok(atorService.buscarAtorPorId(UUID.fromString(id)));
     }
 
