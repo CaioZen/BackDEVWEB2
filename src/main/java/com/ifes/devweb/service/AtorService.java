@@ -2,18 +2,18 @@ package com.ifes.devweb.service;
 
 import com.ifes.devweb.model.Ator;
 import com.ifes.devweb.repository.AtorRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AtorService {
     private final AtorRepository atorRepository;
-
-    public AtorService(AtorRepository atorRepository) {
-        this.atorRepository = atorRepository;
-    }
 
     public Ator salvarAtor(Ator ator) {
         return atorRepository.save(ator);

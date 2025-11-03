@@ -3,18 +3,18 @@ package com.ifes.devweb.service;
 
 import com.ifes.devweb.model.Diretor;
 import com.ifes.devweb.repository.DiretorRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class DiretorService {
     private DiretorRepository diretorRepository;
-
-    public DiretorService(DiretorRepository diretorRepository) {
-        this.diretorRepository = diretorRepository;
-    }
 
     public Diretor salvarDiretor(Diretor diretor) {
         return diretorRepository.save(diretor);

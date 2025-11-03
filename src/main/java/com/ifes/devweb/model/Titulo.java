@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,4 +26,6 @@ public class Titulo {
     @ManyToOne
     @JoinColumn(name = "idClasse")
     private Classe classe;
+    @OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL)
+    private List<Item> itens;
 }

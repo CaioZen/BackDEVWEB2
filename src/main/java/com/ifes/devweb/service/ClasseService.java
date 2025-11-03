@@ -2,18 +2,18 @@ package com.ifes.devweb.service;
 
 import com.ifes.devweb.model.Classe;
 import com.ifes.devweb.repository.ClasseRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ClasseService {
     private final ClasseRepository classeRepository;
-
-    public ClasseService(ClasseRepository classeRepository) {
-        this.classeRepository = classeRepository;
-    }
 
     public Classe salvarClasse(Classe classe) {
         return classeRepository.save(classe);
