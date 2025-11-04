@@ -1,6 +1,7 @@
 package com.ifes.devweb.service;
 
 
+import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
 import com.ifes.devweb.model.Diretor;
 import com.ifes.devweb.repository.DiretorRepository;
 
@@ -25,19 +26,19 @@ public class DiretorService {
     }
 
     public Diretor buscarDiretorPorId(UUID id) {
-        return diretorRepository.findById(id).orElseThrow(()-> new RuntimeException("Diretor não encontrado"));
+        return diretorRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoExecption("Diretor não encontrado"));
     }
 
     public Diretor atualizarDiretor(UUID id, Diretor diretorAtualizado) {
         return diretorRepository.findById(id).map(diretor -> {
             diretor.setNome(diretorAtualizado.getNome());
             return diretorRepository.save(diretor);
-        }).orElseThrow(()-> new RuntimeException("Ator não encontrado"));
+        }).orElseThrow(()-> new RecursoNaoEncontradoExecption("Diretor não encontrado"));
     }
 
     public void deletarDiretor(UUID id) {
         if (!diretorRepository.existsById(id)) {
-            throw new RuntimeException("Ator não encontrado");
+            throw new RecursoNaoEncontradoExecption("Diretor não encontrado");
         }
         diretorRepository.deleteById(id);
     }

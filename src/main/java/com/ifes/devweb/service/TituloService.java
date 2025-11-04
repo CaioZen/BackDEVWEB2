@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.ifes.devweb.dto.TituloRequestDTO;
+import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
 import com.ifes.devweb.model.Ator;
 import com.ifes.devweb.model.Classe;
 import com.ifes.devweb.model.Diretor;
@@ -40,7 +41,7 @@ public class TituloService {
         if(dto.atores() != null) {
             for (UUID atorId : dto.atores()) {
                 Ator ator = atorRepository.findById(atorId)
-                        .orElseThrow(() -> new RuntimeException("Ator não encontrado: " + atorId));
+                        .orElseThrow(() -> new RecursoNaoEncontradoExecption("Ator não encontrado: " + atorId));
                 Elenco elenco = new Elenco();
                 elenco.setAtor(ator);
                 elenco.setTitulo(titulo);
@@ -56,7 +57,7 @@ public class TituloService {
     }
 
     public Titulo buscarTituloPorId(UUID id) {
-        return tituloRepository.findById(id).orElseThrow(() -> new RuntimeException("Título não encontrado"));
+        return tituloRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoExecption("Título não encontrado"));
     }
 
     public Titulo atualizarTitulo(UUID id, Titulo tituloAtualizado) {
@@ -68,12 +69,12 @@ public class TituloService {
             titulo.setDiretor(tituloAtualizado.getDiretor());
             titulo.setClasse(tituloAtualizado.getClasse());
             return tituloRepository.save(titulo);
-        }).orElseThrow(() -> new RuntimeException("Título não encontrado"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Título não encontrado"));
     }
 
     public void deletarTitulo(UUID id) {
         if (!tituloRepository.existsById(id)) {
-            throw new RuntimeException("Título não encontrado");
+            throw new RecursoNaoEncontradoExecption("Título não encontrado");
         }
         tituloRepository.deleteById(id);
     }

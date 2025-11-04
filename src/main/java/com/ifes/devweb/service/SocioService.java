@@ -1,5 +1,6 @@
 package com.ifes.devweb.service;
 
+import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.model.Socio;
 import com.ifes.devweb.repository.DependenteRepository;
@@ -26,7 +27,7 @@ public class SocioService {
     }
 
     public Socio buscarSocioPorId(UUID id){
-        return socioRepository.findById(id).orElseThrow(()-> new RuntimeException("Socio não encontrado"));
+        return socioRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoExecption("Socio não encontrado"));
     }
 
     public Socio atualizarSocio(UUID id, Socio socioAtualizado){
@@ -38,7 +39,7 @@ public class SocioService {
             socio.setEndereco(socioAtualizado.getEndereco());
             socio.setTel(socioAtualizado.getTel());
             return  socioRepository.save(socio);
-        }).orElseThrow(()-> new RuntimeException("Socio não encontrado"));
+        }).orElseThrow(()-> new RecursoNaoEncontradoExecption("Socio não encontrado"));
     }
 
     public Socio desativarSocio(UUID id) {
@@ -50,7 +51,7 @@ public class SocioService {
             }
             return socioRepository.save(socio);
 
-        }).orElseThrow(() -> new RuntimeException("Socio não encontrado"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Socio não encontrado"));
     }
 
     public Socio reativarSocio(UUID id) {
@@ -65,12 +66,12 @@ public class SocioService {
                 }
             }
             return  socioRepository.save(socio);
-        }).orElseThrow(() -> new RuntimeException("Socio não encontrado"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Socio não encontrado"));
     }
 
     public void deletarSocio(UUID id) {
         if(!socioRepository.existsById(id)){
-            throw new RuntimeException("Socio não encontrado");
+            throw new RecursoNaoEncontradoExecption("Socio não encontrado");
         }
         dependenteRepository.deleteAll(dependenteRepository.findBySocioIdCliente(id));
         socioRepository.deleteById(id);

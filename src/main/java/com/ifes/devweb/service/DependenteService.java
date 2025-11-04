@@ -1,5 +1,6 @@
 package com.ifes.devweb.service;
 
+import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.repository.DependenteRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class DependenteService {
     }
 
     public Dependente buscarDependentePorId(UUID id){
-        return dependenteRepository.findById(id).orElseThrow(()-> new RuntimeException("Dependente não encontrado"));
+        return dependenteRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoExecption("Dependente não encontrado"));
     }
 
     public Dependente atualizarDependente(UUID id, Dependente dependente){
@@ -36,7 +37,7 @@ public class DependenteService {
             socio.setSexo(dependente.getSexo());
             socio.setDtNascimento(dependente.getDtNascimento());
             return dependenteRepository.save(socio);
-        }).orElseThrow(()-> new RuntimeException("Dependente não encontrado"));
+        }).orElseThrow(()-> new RecursoNaoEncontradoExecption("Dependente não encontrado"));
     }
 
     public Dependente desativarDependente(UUID id) {
@@ -44,19 +45,19 @@ public class DependenteService {
             dependente.setAtivo(false);
             return dependenteRepository.save(dependente);
 
-        }).orElseThrow(() -> new RuntimeException("Dependente não encontrado"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Dependente não encontrado"));
     }
 
     public Dependente reativarDependente(UUID id) {
         return dependenteRepository.findById(id).map(dependente ->  {
             dependente.setAtivo(true);
             return  dependenteRepository.save(dependente);
-        }).orElseThrow(() -> new RuntimeException("Dependente não encontrado"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Dependente não encontrado"));
     }
 
     public void deletarDependente(UUID id) {
         if(!dependenteRepository.existsById(id)){
-            throw new RuntimeException("Socio não encontrado");
+            throw new RecursoNaoEncontradoExecption("Socio não encontrado");
         }
         dependenteRepository.deleteAll(dependenteRepository.findBySocioIdCliente(id));
         dependenteRepository.deleteById(id);

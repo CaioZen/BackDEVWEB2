@@ -1,5 +1,6 @@
 package com.ifes.devweb.service;
 
+import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
 import com.ifes.devweb.model.Classe;
 import com.ifes.devweb.repository.ClasseRepository;
 
@@ -24,7 +25,7 @@ public class ClasseService {
     }
 
     public Classe buscarClassePorId(UUID id) {
-        return classeRepository.findById(id).orElseThrow(() -> new RuntimeException("Classe não encontrada"));
+        return classeRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoExecption("Classe não encontrada"));
     }
 
     public Classe atualizarClasse(UUID id, Classe classeAtualizada) {
@@ -33,12 +34,12 @@ public class ClasseService {
             classe.setValor(classeAtualizada.getValor());
             classe.setDataDevolucao(classeAtualizada.getDataDevolucao());
             return classeRepository.save(classe);
-        }).orElseThrow(() -> new RuntimeException("Classe não encontrada"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Classe não encontrada"));
     }
 
     public void deletarClasse(UUID id) {
         if (!classeRepository.existsById(id)) {
-            throw new RuntimeException("Classe não encontrada");
+            throw new RecursoNaoEncontradoExecption("Classe não encontrada");
         }
         classeRepository.deleteById(id);
     }

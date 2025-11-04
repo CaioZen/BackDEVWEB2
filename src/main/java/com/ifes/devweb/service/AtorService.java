@@ -1,5 +1,6 @@
 package com.ifes.devweb.service;
 
+import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
 import com.ifes.devweb.model.Ator;
 import com.ifes.devweb.repository.AtorRepository;
 
@@ -24,19 +25,19 @@ public class AtorService {
     }
 
     public Ator buscarAtorPorId(UUID id) {
-        return atorRepository.findById(id).orElseThrow(()-> new RuntimeException("Ator não encontrado"));
+        return atorRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoExecption("Ator não encontrado"));
     }
 
     public Ator atualizarAtor(UUID id, Ator atorAtualizado) {
         return atorRepository.findById(id).map(ator -> {
             ator.setNome(atorAtualizado.getNome());
             return atorRepository.save(ator);
-        }).orElseThrow(()-> new RuntimeException("Ator não encontrado"));
+        }).orElseThrow(()-> new RecursoNaoEncontradoExecption("Ator não encontrado"));
     }
 
     public void deletarAtor(UUID id) {
         if (!atorRepository.existsById(id)) {
-            throw new RuntimeException("Ator não encontrado");
+            throw new RecursoNaoEncontradoExecption("Ator não encontrado");
         }
         atorRepository.deleteById(id);
     }
