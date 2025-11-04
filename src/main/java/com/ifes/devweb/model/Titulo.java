@@ -3,8 +3,8 @@ package com.ifes.devweb.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +18,7 @@ public class Titulo {
     private String sinopse;
     private String categoria;
     @OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL)
-    private Set<Elenco> elenco = new HashSet<>();
+    private List<Elenco> elenco = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "idDiretor")
     private Diretor diretor;
