@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DependenteRepository extends JpaRepository<Dependente, UUID> {
-    List<Dependente> findBySocioId(UUID socioId);
+    List<Dependente> findBySocioIdCliente(UUID socioId);
 }

@@ -15,6 +15,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Dependente extends Cliente {
     @ManyToOne
-    @JoinColumn(name = "idSocio")
+    @JoinColumn(name = "socio_id")
     private Socio socio;
 }

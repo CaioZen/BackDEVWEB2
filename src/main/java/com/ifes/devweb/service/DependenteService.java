@@ -1,7 +1,6 @@
 package com.ifes.devweb.service;
 
 import com.ifes.devweb.model.Dependente;
-import com.ifes.devweb.model.Socio;
 import com.ifes.devweb.repository.DependenteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class DependenteService {
     }
 
     public List<Dependente> listarDependentesPorIdDoSocio(UUID id){
-        return dependenteRepository.findBySocioId(id);
+        return dependenteRepository.findBySocioIdCliente(id);
     }
 
     public Dependente buscarDependentePorId(UUID id){
@@ -59,7 +58,7 @@ public class DependenteService {
         if(!dependenteRepository.existsById(id)){
             throw new RuntimeException("Socio não encontrado");
         }
-        dependenteRepository.deleteAll(dependenteRepository.findBySocioId(id));
+        dependenteRepository.deleteAll(dependenteRepository.findBySocioIdCliente(id));
         dependenteRepository.deleteById(id);
     }
 }

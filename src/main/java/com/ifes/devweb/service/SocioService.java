@@ -44,7 +44,7 @@ public class SocioService {
     public Socio desativarSocio(UUID id) {
         return socioRepository.findById(id).map(socio -> {
             socio.setAtivo(false);
-            for (Dependente dependente : dependenteRepository.findBySocioId(id)) {
+            for (Dependente dependente : dependenteRepository.findBySocioIdCliente(id)) {
                 dependente.setAtivo(false);
                 dependenteRepository.save(dependente);
             }
@@ -57,7 +57,7 @@ public class SocioService {
         return socioRepository.findById(id).map(socio ->  {
             int count = 0;
             socio.setAtivo(true);
-            for (Dependente dependente : dependenteRepository.findBySocioId(id)) {
+            for (Dependente dependente : dependenteRepository.findBySocioIdCliente(id)) {
                 if (count != 3) {
                     dependente.setAtivo(true);
                     dependenteRepository.save(dependente);
@@ -72,7 +72,7 @@ public class SocioService {
         if(!socioRepository.existsById(id)){
             throw new RuntimeException("Socio não encontrado");
         }
-        dependenteRepository.deleteAll(dependenteRepository.findBySocioId(id));
+        dependenteRepository.deleteAll(dependenteRepository.findBySocioIdCliente(id));
         socioRepository.deleteById(id);
     }
 }
