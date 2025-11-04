@@ -14,6 +14,7 @@ public  abstract class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idCliente;
+    private int numInscricao;
     private String nome;
     private String dtNascimento;
     private String sexo;
