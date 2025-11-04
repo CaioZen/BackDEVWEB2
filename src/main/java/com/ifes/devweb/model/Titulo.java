@@ -26,6 +26,4 @@ public class Titulo {
     @ManyToOne
     @JoinColumn(name = "idClasse")
     private Classe classe;
-    @OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL)
-    private List<Item> itens;
 }

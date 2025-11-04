@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class DiretorService {
-    private DiretorRepository diretorRepository;
+    private final DiretorRepository diretorRepository;
 
     public Diretor salvarDiretor(Diretor diretor) {
         return diretorRepository.save(diretor);

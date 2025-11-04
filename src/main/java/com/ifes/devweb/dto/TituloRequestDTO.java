@@ -1,5 +1,8 @@
 package com.ifes.devweb.dto;
 
+import com.ifes.devweb.model.Classe;
+import com.ifes.devweb.model.Diretor;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -8,8 +11,8 @@ public record TituloRequestDTO(
     int ano,
     String sinopse,
     String categoria,
-    UUID idDiretor,
-    UUID idClasse,
-    List<UUID> atoresIds
+    Diretor diretor,
+    Classe classe,
+    List<UUID> atores
     ) {
 } 
