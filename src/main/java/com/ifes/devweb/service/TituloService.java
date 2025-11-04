@@ -30,16 +30,16 @@ public class TituloService {
         titulo.setAno(dto.ano());
         titulo.setSinopse(dto.sinopse());
         titulo.setCategoria(dto.categoria());
-        Diretor diretor = diretorService.buscarDiretorPorId(dto.diretor().getIdDiretor());
-        Classe classe = classeService.buscarClassePorId(dto.classe().getIdClasse());
+        Diretor diretor = diretorService.buscarDiretorPorId(dto.idDiretor());
+        Classe classe = classeService.buscarClassePorId(dto.idClasse());
 
         titulo.setDiretor(diretor);
         titulo.setClasse(classe);
         titulo.getElenco().clear();
 
         if(dto.atores() != null) {
-            for (UUID atorId : dto.atores()) {
-                Ator ator = atorRepository.findById(atorId)
+            for (String atorId : dto.atores()) {
+                Ator ator = atorRepository.findById(UUID.fromString(atorId))
                         .orElseThrow(() -> new RuntimeException("Ator não encontrado: " + atorId));
                 Elenco elenco = new Elenco();
                 elenco.setAtor(ator);
