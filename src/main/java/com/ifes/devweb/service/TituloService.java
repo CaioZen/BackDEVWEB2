@@ -38,8 +38,8 @@ public class TituloService {
         titulo.getElenco().clear();
 
         if(dto.atores() != null) {
-            for (String atorId : dto.atores()) {
-                Ator ator = atorRepository.findById(UUID.fromString(atorId))
+            for (UUID atorId : dto.atores()) {
+                Ator ator = atorRepository.findById(atorId)
                         .orElseThrow(() -> new RuntimeException("Ator não encontrado: " + atorId));
                 Elenco elenco = new Elenco();
                 elenco.setAtor(ator);

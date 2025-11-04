@@ -11,6 +11,6 @@ public record TituloRequestDTO(
     String categoria,
     UUID idDiretor,
     UUID idClasse,
-    List<String> atores
+    List<UUID> atores
     ) {
 } 
