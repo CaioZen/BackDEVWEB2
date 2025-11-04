@@ -16,5 +16,5 @@ public class Classe {
     private UUID idClasse;
     private String nome;
     private float valor;
-    private String dataDevolucao;
+    private int dataDevolucao;
 }
