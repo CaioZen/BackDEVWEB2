@@ -1,10 +1,12 @@
 package com.ifes.devweb.service;
 
-import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
+import com.ifes.devweb.dto.SocioRequestDTO;
+import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.model.Socio;
 import com.ifes.devweb.repository.DependenteRepository;
 import com.ifes.devweb.repository.SocioRepository;
+import com.ifes.devweb.utils.ValidadorData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,17 @@ public class SocioService {
     private final SocioRepository socioRepository;
     private final DependenteRepository dependenteRepository;
 
-    public Socio salvarSocio(Socio socio) {
+    public Socio salvarSocio(SocioRequestDTO dto) {
+        Socio socio = new Socio();
+        socio.setNome(dto.nome());
+        socio.setSexo(dto.sexo());
+        socio.setEndereco(dto.endereco());
+        socio.setTel(dto.tel());
+        socio.setDtNascimento(ValidadorData.validar(dto.dtNascimento()));
+        if (socioRepository.findNumInscricaoMax() == null)
+            socio.setNumInscricao(0);
+        else
+            socio.setNumInscricao(socioRepository.findNumInscricaoMax()+1);
         socio.setAtivo(true);
         return socioRepository.save(socio);
     }
@@ -27,7 +39,7 @@ public class SocioService {
     }
 
     public Socio buscarSocioPorId(UUID id){
-        return socioRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoExecption("Socio não encontrado"));
+        return socioRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoException("Socio não encontrado"));
     }
 
     public Socio atualizarSocio(UUID id, Socio socioAtualizado){
@@ -39,7 +51,7 @@ public class SocioService {
             socio.setEndereco(socioAtualizado.getEndereco());
             socio.setTel(socioAtualizado.getTel());
             return  socioRepository.save(socio);
-        }).orElseThrow(()-> new RecursoNaoEncontradoExecption("Socio não encontrado"));
+        }).orElseThrow(()-> new RecursoNaoEncontradoException("Socio não encontrado"));
     }
 
     public Socio desativarSocio(UUID id) {
@@ -51,7 +63,7 @@ public class SocioService {
             }
             return socioRepository.save(socio);
 
-        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Socio não encontrado"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoException("Socio não encontrado"));
     }
 
     public Socio reativarSocio(UUID id) {
@@ -66,12 +78,12 @@ public class SocioService {
                 }
             }
             return  socioRepository.save(socio);
-        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Socio não encontrado"));
+        }).orElseThrow(() -> new RecursoNaoEncontradoException("Socio não encontrado"));
     }
 
     public void deletarSocio(UUID id) {
         if(!socioRepository.existsById(id)){
-            throw new RecursoNaoEncontradoExecption("Socio não encontrado");
+            throw new RecursoNaoEncontradoException("Socio não encontrado");
         }
         dependenteRepository.deleteAll(dependenteRepository.findBySocioIdCliente(id));
         socioRepository.deleteById(id);

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
+import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Item;
 import com.ifes.devweb.repository.ItemRepository;
 
@@ -25,7 +25,7 @@ public class ItemService {
     }
 
     public Item buscarItemPorId(UUID id) {
-        return itemRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoExecption("Item não encontrado"));
+        return itemRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoException("Item não encontrado"));
     }
 
     public Item atualizarItem(UUID id, Item itemAtualizado) {
@@ -34,12 +34,12 @@ public class ItemService {
             item.setDtAquisicao(itemAtualizado.getDtAquisicao());
             item.setTipoItem(itemAtualizado.getTipoItem());
             return itemRepository.save(item);
-        }).orElseThrow(()-> new RecursoNaoEncontradoExecption("Item não encontrado"));
+        }).orElseThrow(()-> new RecursoNaoEncontradoException("Item não encontrado"));
     }
 
     public void deletarItem(UUID id) {
         if (!itemRepository.existsById(id)) {
-            throw new RecursoNaoEncontradoExecption("Item não encontrado");
+            throw new RecursoNaoEncontradoException("Item não encontrado");
         }
         itemRepository.deleteById(id);
     }

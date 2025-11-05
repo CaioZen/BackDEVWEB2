@@ -1,11 +1,9 @@
 package com.ifes.devweb.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -14,9 +12,10 @@ public  abstract class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idCliente;
+    @Column(unique = true)
     private int numInscricao;
     private String nome;
-    private String dtNascimento;
+    private LocalDate dtNascimento;
     private String sexo;
     private boolean isAtivo;
 }
