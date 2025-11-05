@@ -51,18 +51,14 @@ public class DependenteService {
         }).orElseThrow(()-> new RecursoNaoEncontradoExecption("Dependente não encontrado"));
     }
 
-    public Dependente desativarDependente(UUID id) {
+    public Dependente statusDependente(UUID id) {
         return dependenteRepository.findById(id).map(dependente -> {
-            dependente.setAtivo(false);
+            if(dependente.isAtivo())
+                dependente.setAtivo(false);
+            else
+                dependente.setAtivo(true);
             return dependenteRepository.save(dependente);
 
-        }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Dependente não encontrado"));
-    }
-
-    public Dependente reativarDependente(UUID id) {
-        return dependenteRepository.findById(id).map(dependente ->  {
-            dependente.setAtivo(true);
-            return  dependenteRepository.save(dependente);
         }).orElseThrow(() -> new RecursoNaoEncontradoExecption("Dependente não encontrado"));
     }
 

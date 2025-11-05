@@ -72,20 +72,12 @@ public class DependenteController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Dependente desativado com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Dependente alterado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dependente não encontrado")
     })
-    @PutMapping("/desativar/{id}")
+    @PutMapping("/alterarStatus/{id}")
     public ResponseEntity<Dependente> desativarDependentePorId(@PathVariable String id){
-        return ResponseEntity.ok(dependenteService.desativarDependente(UUID.fromString(id)));
+        return ResponseEntity.ok(dependenteService.statusDependente(UUID.fromString(id)));
     }
 
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Dependente reativado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dependente não encontrado")
-    })
-    @PutMapping("/reativar/{id}")
-    public ResponseEntity<Dependente> reativarDependentePorId(@PathVariable String id){
-        return ResponseEntity.ok(dependenteService.reativarDependente(UUID.fromString(id)));
-    }
 }
