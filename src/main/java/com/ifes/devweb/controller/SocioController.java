@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/api/socios")
 @RequiredArgsConstructor
 public class SocioController {
@@ -24,6 +24,7 @@ public class SocioController {
     })
     @PostMapping("/inserir")
     public ResponseEntity<Socio> inserirSocio(@RequestBody Socio socio){
+        System.out.print(socio);
         return ResponseEntity.ok(socioService.salvarSocio(socio));
     }
 

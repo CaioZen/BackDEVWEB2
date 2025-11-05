@@ -1,8 +1,11 @@
 package com.ifes.devweb.service;
 
+import com.ifes.devweb.dto.DependenteRequestDTO;
 import com.ifes.devweb.execption.RecursoNaoEncontradoExecption;
 import com.ifes.devweb.model.Dependente;
+import com.ifes.devweb.model.Socio;
 import com.ifes.devweb.repository.DependenteRepository;
+import com.ifes.devweb.repository.SocioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DependenteService {
     private final DependenteRepository dependenteRepository;
+    private final SocioRepository socioRepository;
 
-    public Dependente salvarDependente(Dependente dependente) {
+    public Dependente salvarDependente(DependenteRequestDTO dto) {
+        Socio socio = socioRepository.findById(dto.idSocio()).orElseThrow(()-> new RecursoNaoEncontradoExecption("Socio não encontrado"));
+        Dependente dependente = new Dependente();
+        dependente.setSocio(socio);
+        dependente.setNome(dto.nome());
+        dependente.setSexo(dto.sexo());
+        dependente.setDtNascimento(dto.dtNascimento());
         dependente.setAtivo(true);
+        socio.getDependentes().add(dependente);
         return dependenteRepository.save(dependente);
     }
 

@@ -1,18 +1,18 @@
 package com.ifes.devweb.controller;
 
+import com.ifes.devweb.dto.DependenteRequestDTO;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.service.DependenteService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/api/dependentes")
 @RequiredArgsConstructor
 public class DependenteController {
@@ -23,8 +23,8 @@ public class DependenteController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar o dependente")
     })
     @PostMapping("/inserir")
-    public ResponseEntity<Dependente> inserirDependente(@RequestBody Dependente dependente){
-        return ResponseEntity.ok(dependenteService.salvarDependente(dependente));
+    public ResponseEntity<Dependente> inserirDependente(@RequestBody DependenteRequestDTO dto){
+        return ResponseEntity.ok(dependenteService.salvarDependente(dto));
     }
 
     @ApiResponses(value = {

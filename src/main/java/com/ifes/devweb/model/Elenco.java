@@ -1,5 +1,6 @@
 package com.ifes.devweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Elenco {
     @JoinColumn(name = "idAtor")
     private Ator ator;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "idTitulo")
     private Titulo titulo;
 }
