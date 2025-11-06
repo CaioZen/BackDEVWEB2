@@ -1,6 +1,7 @@
 package com.ifes.devweb.service;
 
 import com.ifes.devweb.dto.SocioDTO;
+import com.ifes.devweb.execption.CpfInvalidoException;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.model.Socio;
@@ -20,18 +21,23 @@ public class SocioService {
     private final DependenteRepository dependenteRepository;
 
     public Socio salvarSocio(SocioDTO dto) {
-        Socio socio = new Socio();
-        socio.setNome(dto.nome());
-        socio.setSexo(dto.sexo());
-        socio.setEndereco(dto.endereco());
-        socio.setTel(dto.tel());
-        socio.setDtNascimento(ValidadorData.validar(dto.dtNascimento()));
-        if (socioRepository.findNumInscricaoMax() == null)
-            socio.setNumInscricao(0);
-        else
-            socio.setNumInscricao(socioRepository.findNumInscricaoMax()+1);
-        socio.setAtivo(true);
-        return socioRepository.save(socio);
+        if (socioRepository.existsByCpf(dto.cpf()))
+            throw new CpfInvalidoException("Cpf ja cadastrado no banco");
+        else {
+            Socio socio = new Socio();
+            socio.setNome(dto.nome());
+            socio.setSexo(dto.sexo());
+            socio.setEndereco(dto.endereco());
+            socio.setTel(dto.tel());
+            socio.setCpf(dto.cpf());
+            socio.setDtNascimento(ValidadorData.validar(dto.dtNascimento()));
+            if (socioRepository.findNumInscricaoMax() == null)
+                socio.setNumInscricao(0);
+            else
+                socio.setNumInscricao(socioRepository.findNumInscricaoMax() + 1);
+            socio.setAtivo(true);
+            return socioRepository.save(socio);
+        }
     }
 
     public List<Socio> listarSocios(){

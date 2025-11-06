@@ -1,5 +1,6 @@
 package com.ifes.devweb.controller;
 
+import com.ifes.devweb.execption.CpfInvalidoException;
 import com.ifes.devweb.execption.LimiteDependentesAtivoException;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import org.springframework.http.HttpStatus;
@@ -32,4 +33,10 @@ public class ExecptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
+    @ExceptionHandler(CpfInvalidoException.class)
+    public ResponseEntity<Map<String, String>> handleCpfInvalido(CpfInvalidoException ex) {
+        Map<String, String> body = new HashMap<>();
+        body.put("erro", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
 }
