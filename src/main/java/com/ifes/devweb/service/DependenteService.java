@@ -1,6 +1,7 @@
 package com.ifes.devweb.service;
 
 import com.ifes.devweb.dto.DependenteRequestDTO;
+import com.ifes.devweb.execption.LimiteDependentesAtivoException;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.model.Socio;
@@ -21,18 +22,23 @@ public class DependenteService {
 
     public Dependente salvarDependente(DependenteRequestDTO dto) {
         Socio socio = socioRepository.findById(dto.idSocio()).orElseThrow(()-> new RecursoNaoEncontradoException("Socio não encontrado"));
-        Dependente dependente = new Dependente();
-        if (dependenteRepository.findNumInscricaoMax() == null)
-            dependente.setNumInscricao(0);
-        else
-            dependente.setNumInscricao(dependenteRepository.findNumInscricaoMax()+1);
-        dependente.setSocio(socio);
-        dependente.setNome(dto.nome());
-        dependente.setSexo(dto.sexo());
-        dependente.setDtNascimento(ValidadorData.validar(dto.dtNascimento()));
-        dependente.setAtivo(true);
-        socio.getDependentes().add(dependente);
-        return dependenteRepository.save(dependente);
+        List<Dependente> dependentesAtivos = dependenteRepository.findAtivosBySocioId(dto.idSocio());
+        if (dependentesAtivos.size() >= 3)
+            throw new LimiteDependentesAtivoException("Sócio já possui 3 dependentes ativos, não foi possível cadastrar");
+        else {
+            Dependente dependente = new Dependente();
+            if (dependenteRepository.findNumInscricaoMax() == null)
+                dependente.setNumInscricao(0);
+            else
+                dependente.setNumInscricao(dependenteRepository.findNumInscricaoMax() + 1);
+            dependente.setSocio(socio);
+            dependente.setNome(dto.nome());
+            dependente.setSexo(dto.sexo());
+            dependente.setDtNascimento(ValidadorData.validar(dto.dtNascimento()));
+            dependente.setAtivo(true);
+            socio.getDependentes().add(dependente);
+            return dependenteRepository.save(dependente);
+        }
     }
 
     public List<Dependente> listarDependentes() {
