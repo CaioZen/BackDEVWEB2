@@ -3,6 +3,7 @@ package com.ifes.devweb.controller;
 import java.util.List;
 import java.util.UUID;
 
+import com.ifes.devweb.dto.ItemDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +36,8 @@ public class ItemController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar o item")
     })
     @PostMapping("/inserir")
-    public ResponseEntity<Item> inserirItem(@RequestBody Item item){
-        return ResponseEntity.ok(itemService.salvarItem(item));
+    public ResponseEntity<Item> inserirItem(@RequestBody ItemDTO dto){
+        return ResponseEntity.ok(itemService.salvarItem(dto));
     }
 
     @ApiResponses(value = {

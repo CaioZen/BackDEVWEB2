@@ -3,6 +3,9 @@ package com.ifes.devweb.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.ifes.devweb.dto.ItemDTO;
+import com.ifes.devweb.model.Titulo;
+import com.ifes.devweb.repository.TituloRepository;
 import org.springframework.stereotype.Service;
 
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
@@ -15,8 +18,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
+    private final TituloService tituloService;
 
-    public Item salvarItem(Item item) {
+    public Item salvarItem(ItemDTO dto) {
+        Item item = new Item();
+        item.setDtAquisicao(dto.dtAquisicao());
+        item.setTipoItem(dto.tipoItem());
+        item.setNumSerie(dto.numSerie());
+        Titulo titulo = tituloService.buscarTituloPorId(dto.idTitulo());
+        item.setTitulo(titulo);
         return itemRepository.save(item);
     }
 
