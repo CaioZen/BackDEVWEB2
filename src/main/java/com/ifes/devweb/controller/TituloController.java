@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifes.devweb.dto.TituloRequestDTO;
+import com.ifes.devweb.dto.TituloDTO;
 import com.ifes.devweb.model.Titulo;
 import com.ifes.devweb.service.TituloService;
 
@@ -34,7 +34,7 @@ public class TituloController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar o título")
     })
     @PostMapping("/inserir")
-    public ResponseEntity<TituloRequestDTO> inserirTitulo(@RequestBody TituloRequestDTO titulo){
+    public ResponseEntity<TituloDTO> inserirTitulo(@RequestBody TituloDTO titulo){
         tituloService.salvarTitulo(titulo);
         return ResponseEntity.ok(titulo);
     }

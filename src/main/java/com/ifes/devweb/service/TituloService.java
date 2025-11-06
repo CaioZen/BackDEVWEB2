@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.ifes.devweb.dto.TituloRequestDTO;
+import com.ifes.devweb.dto.TituloDTO;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Ator;
 import com.ifes.devweb.model.Classe;
@@ -25,7 +25,7 @@ public class TituloService {
     private final DiretorService diretorService;
     private final ClasseService classeService;
 
-    public void salvarTitulo(TituloRequestDTO dto) {
+    public void salvarTitulo(TituloDTO dto) {
         Titulo titulo = new Titulo();
         titulo.setNome(dto.nome());
         titulo.setAno(dto.ano());

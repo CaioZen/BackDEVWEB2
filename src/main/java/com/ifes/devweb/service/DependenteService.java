@@ -1,6 +1,6 @@
 package com.ifes.devweb.service;
 
-import com.ifes.devweb.dto.DependenteRequestDTO;
+import com.ifes.devweb.dto.DependenteDTO;
 import com.ifes.devweb.execption.LimiteDependentesAtivoException;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Dependente;
@@ -20,7 +20,7 @@ public class DependenteService {
     private final DependenteRepository dependenteRepository;
     private final SocioRepository socioRepository;
 
-    public Dependente salvarDependente(DependenteRequestDTO dto) {
+    public Dependente salvarDependente(DependenteDTO dto) {
         Socio socio = socioRepository.findById(dto.idSocio()).orElseThrow(()-> new RecursoNaoEncontradoException("Socio não encontrado"));
         List<Dependente> dependentesAtivos = dependenteRepository.findAtivosBySocioId(dto.idSocio());
         if (dependentesAtivos.size() >= 3)

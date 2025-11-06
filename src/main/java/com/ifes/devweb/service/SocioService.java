@@ -1,6 +1,6 @@
 package com.ifes.devweb.service;
 
-import com.ifes.devweb.dto.SocioRequestDTO;
+import com.ifes.devweb.dto.SocioDTO;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.model.Socio;
@@ -19,7 +19,7 @@ public class SocioService {
     private final SocioRepository socioRepository;
     private final DependenteRepository dependenteRepository;
 
-    public Socio salvarSocio(SocioRequestDTO dto) {
+    public Socio salvarSocio(SocioDTO dto) {
         Socio socio = new Socio();
         socio.setNome(dto.nome());
         socio.setSexo(dto.sexo());

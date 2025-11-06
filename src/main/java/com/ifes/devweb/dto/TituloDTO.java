@@ -4,7 +4,7 @@ package com.ifes.devweb.dto;
 import java.util.List;
 import java.util.UUID;
 
-public record TituloRequestDTO(
+public record TituloDTO(
     String nome,
     int ano,
     String sinopse,

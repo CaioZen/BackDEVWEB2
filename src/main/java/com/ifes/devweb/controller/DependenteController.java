@@ -1,6 +1,6 @@
 package com.ifes.devweb.controller;
 
-import com.ifes.devweb.dto.DependenteRequestDTO;
+import com.ifes.devweb.dto.DependenteDTO;
 import com.ifes.devweb.model.Dependente;
 import com.ifes.devweb.service.DependenteService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,7 +23,7 @@ public class DependenteController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar o dependente")
     })
     @PostMapping("/inserir")
-    public ResponseEntity<Dependente> inserirDependente(@RequestBody DependenteRequestDTO dto){
+    public ResponseEntity<Dependente> inserirDependente(@RequestBody DependenteDTO dto){
         return ResponseEntity.ok(dependenteService.salvarDependente(dto));
     }
 

@@ -1,6 +1,6 @@
 package com.ifes.devweb.dto;
 
-public record SocioRequestDTO(
+public record SocioDTO(
         String nome,
         String dtNascimento,
         String sexo,

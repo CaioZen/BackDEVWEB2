@@ -2,7 +2,7 @@ package com.ifes.devweb.dto;
 
 import java.util.UUID;
 
-public record DependenteRequestDTO(
+public record DependenteDTO(
         String nome,
         String sexo,
         String dtNascimento,

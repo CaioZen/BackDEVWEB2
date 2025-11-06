@@ -1,13 +1,12 @@
 package com.ifes.devweb.controller;
 
-import com.ifes.devweb.dto.SocioRequestDTO;
+import com.ifes.devweb.dto.SocioDTO;
 import com.ifes.devweb.model.Socio;
 import com.ifes.devweb.service.SocioService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class SocioController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar o socio")
     })
     @PostMapping("/inserir")
-    public ResponseEntity<Socio> inserirSocio(@RequestBody SocioRequestDTO dto){
+    public ResponseEntity<Socio> inserirSocio(@RequestBody SocioDTO dto){
         return ResponseEntity.ok(socioService.salvarSocio(dto));
     }
 
