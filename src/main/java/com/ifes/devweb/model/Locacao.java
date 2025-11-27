@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +29,18 @@ public class Locacao {
 
     @PrePersist
     protected void onCreate() {
-        this.dtDevolucaoPrevista = LocalDate.now().toString();
+        this.dtLocacao = LocalDate.now().toString();
+        if (this.dtDevolucaoPrevista == null)
+            this.dtDevolucaoPrevista = calcularDevolucao(LocalDate.now());
+        this.dtDevolucaoEfetiva = null;
+        if (this.valorCobrado == 0)
+            this.valorCobrado = item.getTitulo().getClasse().getValor();
+        this.multaCobrada = 0;
+    }
+
+    protected String calcularDevolucao(LocalDate data){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate novaData = data.plusDays(item.getTitulo().getClasse().getDataDevolucao());
+        return novaData.format(dtf);
     }
 }
