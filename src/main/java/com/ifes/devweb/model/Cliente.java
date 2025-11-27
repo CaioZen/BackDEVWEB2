@@ -6,7 +6,8 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 public  abstract class Cliente {
     @Id
