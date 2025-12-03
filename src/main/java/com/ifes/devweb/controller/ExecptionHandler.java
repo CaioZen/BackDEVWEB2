@@ -1,5 +1,6 @@
 package com.ifes.devweb.controller;
 
+import com.ifes.devweb.execption.ClienteEmDebitoException;
 import com.ifes.devweb.execption.CpfInvalidoException;
 import com.ifes.devweb.execption.LimiteDependentesAtivoException;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
@@ -39,4 +40,18 @@ public class ExecptionHandler {
         body.put("erro", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
+
+    @ExceptionHandler(ClienteEmDebitoException.class)
+    public ResponseEntity<Map<String, Object>> handleClienteEmDebito(ClienteEmDebitoException ex) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Cliente possui locações em débito");
+        body.put("message", ex.getMessage());
+        body.put("locacoesEmDebito", ex.getLocacaoList());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
 }

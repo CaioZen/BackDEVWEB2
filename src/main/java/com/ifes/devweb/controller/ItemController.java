@@ -53,7 +53,7 @@ public class ItemController {
             @ApiResponse(responseCode = "200", description = "Item alterado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Item não encontrado")
     })
-    @PutMapping("atualizar/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<Item> atualizarItem(@PathVariable String id, @RequestBody Item item) {
         return ResponseEntity.ok(itemService.atualizarItem(UUID.fromString(id), item));
     }
