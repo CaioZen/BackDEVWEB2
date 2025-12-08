@@ -2,6 +2,7 @@ package com.ifes.devweb.service;
 
 import com.ifes.devweb.dto.LocacaoDTO;
 import com.ifes.devweb.execption.ClienteEmDebitoException;
+import com.ifes.devweb.execption.ItemIndisponivelException;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Cliente;
 import com.ifes.devweb.model.Item;
@@ -80,6 +81,10 @@ public class LocacaoService {
     public void deletarLocacao(UUID id) {
         if(!locacaoRepository.existsById(id))
             throw new RecursoNaoEncontradoException("Locação não encontrada");
-        locacaoRepository.deleteById(id);
+        Locacao locacao = locacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Locação não encontrada"));
+        if(locacao.getDtDevolucaoEfetiva() ==null)
+            locacaoRepository.deleteById(id);
+        else
+            throw new ItemIndisponivelException("Item indisponível", locacao.getDtDevolucaoPrevista());
     }
 }

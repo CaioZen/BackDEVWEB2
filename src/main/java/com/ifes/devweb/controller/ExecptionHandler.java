@@ -1,9 +1,6 @@
 package com.ifes.devweb.controller;
 
-import com.ifes.devweb.execption.ClienteEmDebitoException;
-import com.ifes.devweb.execption.CpfInvalidoException;
-import com.ifes.devweb.execption.LimiteDependentesAtivoException;
-import com.ifes.devweb.execption.RecursoNaoEncontradoException;
+import com.ifes.devweb.execption.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,4 +51,15 @@ public class ExecptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
+    @ExceptionHandler(ItemIndisponivelException.class)
+    public ResponseEntity<Map<String, Object>> handleItemIndisponivel(ItemIndisponivelException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Item indisponível");
+        body.put("message", ex.getMessage());
+        body.put("dtDisponivel", ex.getDtDisponivel());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
 }
