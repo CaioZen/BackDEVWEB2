@@ -26,7 +26,7 @@ public class LocacaoService {
     public Locacao salvarLocacao(LocacaoDTO dto) {
         Locacao locacao = new Locacao();
 
-        List<Locacao> todas = locacaoRepository.findByClienteId(dto.idCliente());
+        List<Locacao> todas = locacaoRepository.findByClienteIdCliente(dto.idCliente());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate hoje = LocalDate.now();
 
