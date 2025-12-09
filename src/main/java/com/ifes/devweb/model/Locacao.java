@@ -32,10 +32,15 @@ public class Locacao {
         this.dtLocacao = LocalDate.now().toString();
         if (this.dtDevolucaoPrevista == null)
             this.dtDevolucaoPrevista = calcularDevolucao(LocalDate.now());
-        this.dtDevolucaoEfetiva = null;
+        //this.dtDevolucaoEfetiva = null;
         if (this.valorCobrado == 0)
             this.valorCobrado = item.getTitulo().getClasse().getValor();
         this.multaCobrada = 0;
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
+
     }
 
     protected String calcularDevolucao(LocalDate data){

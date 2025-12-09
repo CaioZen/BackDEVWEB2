@@ -67,12 +67,14 @@ public class LocacaoService {
 
     public Locacao atualizarLocacao(UUID id, Locacao locacaoAtualizada) {
         return  locacaoRepository.findById(id).map(locacao -> {
-            locacao.setDtLocacao(locacaoAtualizada.getDtLocacao());
+            if (locacaoAtualizada.getDtLocacao() != null)
+                locacao.setDtLocacao(locacaoAtualizada.getDtLocacao());
             locacao.setValorCobrado(locacaoAtualizada.getValorCobrado());
             locacao.setCliente(locacaoAtualizada.getCliente());
             locacao.setItem(locacaoAtualizada.getItem());
             locacao.setDtDevolucaoPrevista(locacaoAtualizada.getDtDevolucaoPrevista());
-            locacao.setDtDevolucaoEfetiva(locacaoAtualizada.getDtDevolucaoEfetiva());
+            if (locacaoAtualizada.getDtDevolucaoEfetiva() != null)
+                locacao.setDtDevolucaoEfetiva(locacaoAtualizada.getDtDevolucaoEfetiva());
             locacao.setMultaCobrada(locacaoAtualizada.getMultaCobrada());
             return locacaoRepository.save(locacao);
         }).orElseThrow(() -> new RuntimeException("Locação não encontrada"));
