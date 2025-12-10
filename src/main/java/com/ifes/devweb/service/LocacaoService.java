@@ -48,6 +48,20 @@ public class LocacaoService {
             );
         }
 
+        List<Locacao> locacoesDoItem = locacaoRepository.findByItemIdItem(dto.idItem());
+
+        boolean itemOcupado = locacoesDoItem.stream().anyMatch(loc -> 
+            loc.getDtDevolucaoEfetiva() == null &&
+            !LocalDate.parse(loc.getDtDevolucaoPrevista(), dtf).isBefore(hoje)
+        );
+
+        if (itemOcupado) {
+            throw new ItemIndisponivelException(
+                "Item já está locado e ainda não foi devolvido",
+                hoje.toString()
+            );
+        }
+
         locacao.setDtDevolucaoPrevista(dto.dtDevolucaoPrevista());
         locacao.setValorCobrado(dto.valorCobrado());
         Cliente cliente = clienteRepository.findById(dto.idCliente()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));

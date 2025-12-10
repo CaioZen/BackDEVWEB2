@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public  interface LocacaoRepository extends JpaRepository<Locacao, UUID> {
     List<Locacao> findByClienteIdCliente(UUID clienteId);
+    List<Locacao> findByItemIdItem(UUID idItem);
 }
