@@ -6,8 +6,8 @@ public record LocacaoDTO(
         String dtLocacao,
         String dtDevolucaoPrevista,
         String dtDevolucaoEfetiva,
-        Float valorCobrado,
-        Float multaCobrada,
+        float valorCobrado,
+        float multaCobrada,
         UUID idItem,
         UUID idCliente
 ) {

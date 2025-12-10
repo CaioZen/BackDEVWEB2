@@ -86,7 +86,7 @@ public class LocacaoService {
     if (dto.dtDevolucaoPrevista() != null)
         locacao.setDtDevolucaoPrevista(dto.dtDevolucaoPrevista());
 
-    if (dto.valorCobrado() != null)
+    if (dto.valorCobrado() != 0)
         locacao.setValorCobrado(dto.valorCobrado());
 
     if (dto.idCliente() != null) {
