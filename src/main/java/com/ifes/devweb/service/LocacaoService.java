@@ -65,20 +65,31 @@ public class LocacaoService {
         return locacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Locação não encontrada"));
     }
 
-    public Locacao atualizarLocacao(UUID id, Locacao locacaoAtualizada) {
-        return  locacaoRepository.findById(id).map(locacao -> {
-            if (locacaoAtualizada.getDtLocacao() != null)
-                locacao.setDtLocacao(locacaoAtualizada.getDtLocacao());
-            locacao.setValorCobrado(locacaoAtualizada.getValorCobrado());
-            locacao.setCliente(locacaoAtualizada.getCliente());
-            locacao.setItem(locacaoAtualizada.getItem());
-            locacao.setDtDevolucaoPrevista(locacaoAtualizada.getDtDevolucaoPrevista());
-            if (locacaoAtualizada.getDtDevolucaoEfetiva() != null)
-                locacao.setDtDevolucaoEfetiva(locacaoAtualizada.getDtDevolucaoEfetiva());
-            locacao.setMultaCobrada(locacaoAtualizada.getMultaCobrada());
-            return locacaoRepository.save(locacao);
-        }).orElseThrow(() -> new RuntimeException("Locação não encontrada"));
+    public Locacao atualizarLocacao(UUID id, LocacaoDTO dto) {
+    Locacao locacao = locacaoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Locação não encontrada"));
+
+    if (dto.dtDevolucaoPrevista() != null)
+        locacao.setDtDevolucaoPrevista(dto.dtDevolucaoPrevista());
+
+    if (dto.valorCobrado() != null)
+        locacao.setValorCobrado(dto.valorCobrado());
+
+    if (dto.idCliente() != null) {
+        Cliente cliente = clienteRepository.findById(dto.idCliente())
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        locacao.setCliente(cliente);
     }
+
+    if (dto.idItem() != null) {
+        Item item = itemService.buscarItemPorId(dto.idItem());
+        locacao.setItem(item);
+    }
+
+    return locacaoRepository.save(locacao);
+}
+
+
 
     public void deletarLocacao(UUID id) {
         if(!locacaoRepository.existsById(id))

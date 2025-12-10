@@ -53,7 +53,7 @@ public class LocacaoController {
             @ApiResponse(responseCode = "400", description = "Locação não encontrada")
     })
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Locacao> atualizarLocacao(@PathVariable String id, @RequestBody Locacao locacao){
+    public ResponseEntity<Locacao> atualizarLocacao(@PathVariable String id, @RequestBody LocacaoDTO locacao){
         return ResponseEntity.ok(locacaoService.atualizarLocacao(UUID.fromString(id), locacao));
     }
 
