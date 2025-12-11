@@ -109,9 +109,11 @@ public class LocacaoService {
         LocalDate dt2 = LocalDate.parse(locacao.getDtDevolucaoPrevista(), formatter);
 
         if(dt1.isAfter(dt2)){
-            long diasAtraso = ChronoUnit.DAYS.between(dt2, dt1);
-            locacao.setMultaCobrada(diasAtraso);
-            locacao.setValorCobrado(locacao.getValorCobrado() + locacao.getMultaCobrada());
+            if(locacao.getMultaCobrada() == 0) {
+                long diasAtraso = ChronoUnit.DAYS.between(dt2, dt1);
+                locacao.setMultaCobrada(diasAtraso);
+                locacao.setValorCobrado(locacao.getValorCobrado() + locacao.getMultaCobrada());
+            }
         }
     }
 

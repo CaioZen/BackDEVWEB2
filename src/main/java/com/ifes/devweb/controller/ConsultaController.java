@@ -1,5 +1,6 @@
 package com.ifes.devweb.controller;
 
+import com.ifes.devweb.dto.CategoriaDTO;
 import com.ifes.devweb.dto.ConsultaDTO;
 import com.ifes.devweb.model.Titulo;
 import com.ifes.devweb.service.ConsultaService;
@@ -38,12 +39,13 @@ public class ConsultaController {
     }
 
     @GetMapping("/listar-categorias")
-    public ResponseEntity<List<String>> listarCategorias(){
+    public ResponseEntity<List<CategoriaDTO>> listarCategorias(){
         List<Titulo> titulos =  tituloService.listarTitulos();
-        List<String> categoria = new ArrayList<>();
+        List<CategoriaDTO> categorias = new ArrayList<>();
         for (Titulo titulo : titulos) {
-            categoria.add(titulo.getCategoria());
+            CategoriaDTO categoriaDTO = new CategoriaDTO(titulo.getNome());
+            categorias.add(categoriaDTO);
         }
-        return ResponseEntity.ok(categoria);
+        return ResponseEntity.ok(categorias);
     }
 }
