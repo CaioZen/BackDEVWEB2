@@ -4,6 +4,7 @@ import com.ifes.devweb.dto.ConsultaDTO;
 import com.ifes.devweb.execption.RecursoNaoEncontradoException;
 import com.ifes.devweb.model.Elenco;
 import com.ifes.devweb.model.Titulo;
+import com.ifes.devweb.repository.ElencoRepository;
 import com.ifes.devweb.repository.TituloRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ConsultaService {
     private final TituloRepository tituloRepository;
+    private final ElencoRepository elencoRepository;
 
     public ConsultaDTO consultarTitulo(UUID id){
         Titulo titulo = tituloRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoException("Título não encontrado"));
@@ -33,5 +35,13 @@ public class ConsultaService {
                 titulo.getClasse().getNome(),
                 titulo.getClasse().getValor()
         );
+    }
+
+    public List<Titulo> listarTitulosPorAtor(UUID id){
+        return elencoRepository.buscarTitulosPorAtor(id);
+    }
+
+    public List<Titulo> listarTitulosPorCategoria(String categoria){
+        return tituloRepository.findTituloByCategoria(categoria);
     }
 }
