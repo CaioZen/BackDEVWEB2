@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,6 +84,8 @@ public class LocacaoService {
     Locacao locacao = locacaoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Locação não encontrada"));
 
+    locacao.setDtDevolucaoEfetiva((dto.dtDevolucaoEfetiva()));
+
     if (dto.dtDevolucaoPrevista() != null)
         locacao.setDtDevolucaoPrevista(dto.dtDevolucaoPrevista());
 
@@ -99,6 +102,19 @@ public class LocacaoService {
         Item item = itemService.buscarItemPorId(dto.idItem());
         locacao.setItem(item);
     }
+
+    if (locacao.getDtDevolucaoEfetiva() != null) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dt1 = LocalDate.parse(locacao.getDtDevolucaoEfetiva(), formatter);
+        LocalDate dt2 = LocalDate.parse(locacao.getDtDevolucaoPrevista(), formatter);
+
+        if(dt1.isAfter(dt2)){
+            long diasAtraso = ChronoUnit.DAYS.between(dt2, dt1);
+            locacao.setMultaCobrada(diasAtraso);
+            locacao.setValorCobrado(locacao.getValorCobrado() + locacao.getMultaCobrada());
+        }
+    }
+
 
     return locacaoRepository.save(locacao);
 }
