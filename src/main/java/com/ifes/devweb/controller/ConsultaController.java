@@ -3,6 +3,7 @@ package com.ifes.devweb.controller;
 import com.ifes.devweb.dto.ConsultaDTO;
 import com.ifes.devweb.model.Titulo;
 import com.ifes.devweb.service.ConsultaService;
+import com.ifes.devweb.service.TituloService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ConsultaController {
     private final ConsultaService consultaService;
+    private final TituloService tituloService;
 
     @GetMapping("/selecionar-titulos/{id}")
     public ResponseEntity<ConsultaDTO> consultarTitulo(@PathVariable String id){
@@ -32,5 +35,15 @@ public class ConsultaController {
     @GetMapping("/listar-titulo-categoria/{id}")
     public ResponseEntity<List<Titulo>> listarTitulosPorCategoria(@PathVariable String id){
         return ResponseEntity.ok(consultaService.listarTitulosPorCategoria(id));
+    }
+
+    @GetMapping("/listar-categorias")
+    public ResponseEntity<List<String>> listarCategorias(){
+        List<Titulo> titulos =  tituloService.listarTitulos();
+        List<String> categoria = new ArrayList<>();
+        for (Titulo titulo : titulos) {
+            categoria.add(titulo.getCategoria());
+        }
+        return ResponseEntity.ok(categoria);
     }
 }

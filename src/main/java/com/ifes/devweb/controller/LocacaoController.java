@@ -62,7 +62,7 @@ public class LocacaoController {
             @ApiResponse(responseCode = "400", description = "Locação não encontrada")
     })
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deletarItem(@PathVariable String id){
+    public ResponseEntity<Void> deletarLocacao(@PathVariable String id){
         locacaoService.deletarLocacao(UUID.fromString(id));
         return ResponseEntity.ok().build();
     }
